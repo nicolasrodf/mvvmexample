@@ -20,7 +20,13 @@ class MainActivityViewModel(initValue: Int) : ViewModel() {
 
     fun updateTotal() {
         //Ahora se obtendrá automaticamente el valor de nuestro editText con two-way-databinding (en el xml)
-        val input:Int = inputText.value!!.toInt() //convertir nuestra nueva variable mutable del editText a Integer
+        //convertir nuestra nueva variable mutable del editText a Integer
+        val input:Int
+        if(inputText.value?.isNotEmpty() == true) {
+            input = inputText.value!!.toInt()
+        }else{
+            input = 0
+        }
         //Sumar al total
         total.value = total.value?.plus(input)
     }
