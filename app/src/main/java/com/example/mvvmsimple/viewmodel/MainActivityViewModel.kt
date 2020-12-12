@@ -12,12 +12,17 @@ class MainActivityViewModel(initValue: Int) : ViewModel() {
     val totalData : LiveData<Int>
     get() = total
 
+    val inputText = MutableLiveData<String>() //Será el nombre de la variable mutable de nuestro editText para obtener su valor en String (two-way-databinding en el xml)
+
     init {
         total.value = initValue
     }
 
-    fun updateTotal(value:Int) {
-        total.value = total.value?.plus(value)
+    fun updateTotal() {
+        //Ahora se obtendrá automaticamente el valor de nuestro editText con two-way-databinding (en el xml)
+        val input:Int = inputText.value!!.toInt() //convertir nuestra nueva variable mutable del editText a Integer
+        //Sumar al total
+        total.value = total.value?.plus(input)
     }
 
 }

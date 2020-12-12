@@ -20,21 +20,7 @@ class MainActivity : AppCompatActivity() {
         viewModelFactory = MainActivityViewModelFactory(100) //Pasamos el parámetro inicial a la instancia del ViewModel utilizando un Factory!!
         viewModel = ViewModelProvider(this,viewModelFactory).get(MainActivityViewModel::class.java) //asociamos el Factory al ViewModel
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        //Observamos el cambio de valor de total en el ViewModel para hacer una accion auomática (en este caso actualizar la vista)
-        viewModel.totalData.observe(this, Observer {
-            binding.tvResult.text = it.toString()
-        })
-        binding.btnCalculate.setOnClickListener {
-            sumValue()
-        }
-    }
-
-    private fun sumValue() {
-        binding.apply {
-            if(etEnterNumber.text.trim().isNotEmpty()){
-                viewModel.updateTotal(etEnterNumber.text.toString().toInt())
-               // tvResult.text = viewModel.getSum().toString() // Ya no es necesario ya que estamos observando su valor con LiveData
-            }
-        }
+        binding.myViewModel = viewModel //asociamos el objeto databinding creado en el xml con nuestro ViewModel
+        binding.lifecycleOwner = this //registrar el lifecycleOwner (para el usar LiveData con Databinding)
     }
 }
